@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_learning/home_screen.dart';
+import 'package:riverpod_learning/counter_screen.dart';
 
 void main() {
   runApp(ProviderScope(child: const MyApp()));
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: HomeScreen(),
+      home: CounterScreen1(),
     );
   }
 }
