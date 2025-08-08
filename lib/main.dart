@@ -84,6 +84,17 @@ class MyHomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final count = ref.watch(counterProvider);
+    ref.listen(counterProvider, (previous, next) {
+      if (next == 10) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('The value is $next')));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('The count is updated now is $next')),
+        );
+      }
+    });
     debugPrint('Full screen is builded.....');
     return Scaffold(
       backgroundColor: Colors.white,
