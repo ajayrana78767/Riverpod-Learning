@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_learning/Future%20Provider/api_service.dart';
+import 'package:riverpod_learning/Future%20Provider/employee_model.dart';
+import 'package:riverpod_learning/Future%20Provider/users_screen.dart';
 import 'package:riverpod_learning/State%20Notifier%20Provider/counter_demo.dart';
 
 final counterProvider = StateNotifierProvider<CounterDemo, int>(
   (ref) => CounterDemo(),
 );
+final apiProvider = Provider<ApiService>((ref) => ApiService());
+final userDataProvider = FutureProvider<List<Employee>>((ref) {
+  return ref.read(apiProvider).getUsers();
+});
 void main() {
   runApp(ProviderScope(child: const MyApp()));
 }
@@ -14,7 +21,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: MyHomePage());
+    return MaterialApp(debugShowCheckedModeBanner: false, home: UsersScreen());
   }
 }
 
@@ -34,7 +41,12 @@ class MyHomePage extends ConsumerWidget {
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
-      body: Center(child: Text(counter.toString(),style: TextStyle(fontSize: 36,fontWeight: FontWeight.bold),)),
+      body: Center(
+        child: Text(
+          counter.toString(),
+          style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.teal,
         onPressed: () {
