@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_learning/Future%20Provider/api_service.dart';
 import 'package:riverpod_learning/Future%20Provider/employee_model.dart';
-import 'package:riverpod_learning/Future%20Provider/users_screen.dart';
+// import 'package:riverpod_learning/Future%20Provider/users_screen.dart';
 import 'package:riverpod_learning/State%20Notifier%20Provider/counter_demo.dart';
+import 'package:riverpod_learning/Stream%20Provider/stream_provider_example.dart';
 
 final counterProvider = StateNotifierProvider<CounterDemo, int>(
   (ref) => CounterDemo(),
@@ -11,6 +12,12 @@ final counterProvider = StateNotifierProvider<CounterDemo, int>(
 final apiProvider = Provider<ApiService>((ref) => ApiService());
 final userDataProvider = FutureProvider<List<Employee>>((ref) {
   return ref.read(apiProvider).getUsers();
+});
+final streamProvider = StreamProvider<int>((ref) {
+  return Stream.periodic(
+    const Duration(seconds: 4),
+    ((compulationCount) => compulationCount),
+  );
 });
 void main() {
   runApp(ProviderScope(child: const MyApp()));
@@ -21,7 +28,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: UsersScreen());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: StreamProviderExample(),
+    );
   }
 }
 
